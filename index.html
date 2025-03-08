@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture-Controlled YouTube Player</title>
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- MediaPipe initialization script -->
+    <script type="module">
+        // Import MediaPipe modules initialization function
+        window.initMediaPipe = async function() {
+            try {
+                const vision = await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/vision_bundle.mjs');
+                window.mpVision = vision;
+                document.getElementById('log').innerHTML += `<div class="log-entry">[${new Date().toLocaleTimeString()}] MediaPipe vision module loaded</div>`;
+                console.log("MediaPipe vision module loaded");
+                return true;
+            } catch (error) {
+                document.getElementById('log').innerHTML += `<div class="log-entry">[${new Date().toLocaleTimeString()}] ERROR loading MediaPipe: ${error.message}</div>`;
+                console.error("MediaPipe loading error:", error);
+                return false;
+            }
+        };
+        
+        // Initialize immediately
+        window.initMediaPipe();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gesture Tube</h1>
+            <p class="tagline">Control YouTube with hand gestures</p>
+        </header>
+        
+        <div class="main-content">
+            <!-- Left column: YouTube player and controls -->
+            <div class="left-column">
+                <div class="panel">
+                    <!-- YouTube Player -->
+                    <div class="player-container">
+                        <div id="youtube-player"></div>
+                    </div>
+                    
+                    <!-- Video ID input -->
+                    <div class="input-group">
+                        <input type="text" id="video-id" placeholder="Enter YouTube video ID (e.g., dQw4w9WgXcQ)">
+                        <button class="btn btn-primary" id="load-button">Load</button>
+                    </div>
+                    
+                    <!-- Control buttons -->
+                    <div class="controls">
+                        <button class="btn btn-success" id="play-button">Play</button>
+                        <button class="btn btn-primary" id="pause-button">Pause</button>
+                        <button class="btn btn-danger" id="stop-button">Stop</button>
+                        <button class="btn btn-primary" id="gesture-toggle">Start Gesture Control</button>
+                    </div>
+                </div>
+                
+                <!-- Gesture guide panel -->
+                <div class="panel gesture-guide">
+                    <h3>Gesture Controls</h3>
+                    <p class="tagline">Hold each gesture for 1 second to activate. Hold continuously for volume and playback controls.</p>
+                    
+                    <div class="gesture-grid">
+                        <div class="gesture-card">
+                            <div class="icon">☝️</div>
+                            <div class="name">Pointing Up</div>
+                            <div class="action">Toggle Tracking</div>
+                        </div>
+                        <div class="gesture-card">
+                            <div class="icon">✌️</div>
+                            <div class="name">Victory</div>
+                            <div class="action">Play/Pause</div>
+                        </div>
+                        <div class="gesture-card">
+                            <div class="icon">👍</div>
+                            <div class="name">Thumb Up</div>
+                            <div class="action">Fast Forward</div>
+                        </div>
+                        <div class="gesture-card">
+                            <div class="icon">👎</div>
+                            <div class="name">Thumb Down</div>
+                            <div class="action">Rewind</div>
+                        </div>
+                        <div class="gesture-card">
+                            <div class="icon">🖐</div>
+                            <div class="name">Open Palm</div>
+                            <div class="action">Volume Up</div>
+                        </div>
+                        <div class="gesture-card">
+                            <div class="icon">✊</div>
+                            <div class="name">Closed Fist</div>
+                            <div class="action">Volume Down</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right column: Webcam feed and debug log -->
+            <div class="right-column">
+                <div class="panel">
+                    <h3>Camera Feed</h3>
+                    <div class="webcam-container">
+                        <video id="webcam" autoplay playsinline></video>
+                        <canvas id="output-canvas"></canvas>
+                    </div>
+                    
+                    <div class="status">
+                        <div class="status-indicator" id="status-indicator"></div>
+                        <div class="status-text" id="status-text">Gesture recognition inactive</div>
+                    </div>
+                    
+                    <h3 style="margin-top: 1rem;">Debug Log</h3>
+                    <div class="log-container" id="log"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- YouTube API script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
+    <!-- Main application JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>

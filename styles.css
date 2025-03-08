@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #6366f1;
+    --secondary: #10b981;
+    --tertiary: #f43f5e;
+    --bg-dark: #0f172a;
+    --bg: #1e293b;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --border-radius: 0.75rem;
+    --transition: all 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-size: 2rem;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .main-content {
+        grid-template-columns: 3fr 2fr;
+    }
+}
+
+.panel {
+    background: var(--bg);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Player styling */
+.player-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+#youtube-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Controls styling */
+.controls {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-success {
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-danger {
+    background: var(--tertiary);
+    color: white;
+}
+
+/* Video input form */
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: var(--text);
+}
+
+/* Webcam and gesture detection */
+.webcam-container {
+    position: relative;
+    width: 100%;
+}
+
+#webcam {
+    width: 100%;
+    border-radius: var(--border-radius);
+    transform: rotateY(180deg);
+    background-color: #000;
+    display: block;
+}
+
+#output-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+    transform: rotateY(180deg);
+}
+
+/* Gesture guide */
+.gesture-guide {
+    margin-top: 1rem;
+}
+
+.gesture-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.gesture-card {
+    background: #334155;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.gesture-card .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.gesture-card .name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.gesture-card .action {
+    color: var(--text-muted);
+}
+
+/* Status indicator */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #64748b;
+}
+
+.status-indicator.active {
+    background-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.status-text {
+    color: var(--text-muted);
+}
+
+/* Log */
+.log-container {
+    margin-top: 1rem;
+    max-height: 150px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-family: monospace;
+    font-size: 0.75rem;
+}
+
+.log-entry {
+    margin-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.25rem;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
